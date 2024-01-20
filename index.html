@@ -1,37 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <style>
-        * {
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-        }
-        html, body {
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: Arial, sans-serif;
-            background-color: #f8f8f8;
-            color: #333;
-        }
-        .centered-text {
-            font-size: calc(80px + 2vmin);
-            text-align: center;
-        }
-        .red-text {
-            color: red;
-        }
-        @media screen and (max-width: 600px) {
-            .centered-text {
-                font-size: calc(10px + 4vmin);
-            }
-        }
-    </style>
-	<title>I'M FOGWALKER!</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>I'M FOGWALKER!</title>
+<meta name="keywords" content="FOG , FOGWALKER , 雾行者" />
+<meta name="description" content="雾行者 " />
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Arial', Courier, monospace;
+	  font-size: calc(50px + 4vmin);
+      background-color: #f8f8f8;
+    }
+    .typewriter {
+      position: relative;
+      overflow: hidden;
+      border-right: .15em solid;
+      white-space: nowrap;
+      margin: 0 auto;
+      letter-spacing: .15em;
+      animation: typing 3.5s steps(30, end), blink-caret .75s step-end infinite;
+    }
+    .red {
+      color: red;
+    }
+    @media screen and (max-width: 600px) {
+      .typewriter {
+        font-size: calc(10px + 4vmin);
+      }
+    }
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: black }
+    }
+  </style>
 </head>
 <body>
-    <p class="centered-text">I'M <span class="red-text">FOG</span>WALKER!</p>
+  <div class="typewriter">
+    I'M <span class="red">FOG</span>WALKER!
+  </div>
 </body>
 </html>
