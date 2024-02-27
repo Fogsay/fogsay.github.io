@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>电报图床 - 电报图像托管，免费和无限的图像托管</title>
+  <meta name="description" content="基于 Telegraph 免费和无限的图像托管">
+  <link rel="shortcut icon" href="//wsrv.nl/?url=telegra.ph/file/50fee15aa10cfacf2fd76.png" type="image/x-icon" />  
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background:#f6f8fa url(//wsrv.nl/?url=telegra.ph/file/b748d085303e38901fbee.png) top;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 35px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      background-color: rgba(246,248,250,0.5);
+        }
+
+        .upload-btn-wrapper {
+            position: relative;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            display: flex;
+            background-color: #007BFF;
+            color: #FFF;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .upload-btn-wrapper:hover {
+            background-color: #0056b3;
+        }
+
+        .upload-btn-wrapper input[type=file] {
+            font-size: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+        }
+
+        .custom-input-group-append {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+        }
+
+        .alert {
+            position: fixed;
+            z-index: 9999;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.6;
+            padding: 10px;
+        }
+
+        .alert.alert-warning {
+            color: #fff;
+            background-color: #333333;
+            border: 1px solid #ddd;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center">电报图像托管</h2>
+        <p class="text-center text-muted" style="color:red;">免费和无限的图像托管</p>
+        <p class="text-center text-muted" style="color:#A569BD;">立即开始上传您的图片,上传图片限制 5M 以内</p>
+        <hr>
+
+        <div class="upload-btn-wrapper text-center">
+            <span>选择图片</span>
+            <input type="file" name="file" id="fileInput" accept="image/png, image/jpeg, image/jpg, image/gif">
+        </div>
+
+        <div id="uploadStatus" style="margin-top: 20px;"></div>
+
+        <hr>
+        <p align="center">© <script>document.write(new Date().getFullYear())</script> <a href="https://img.yunloc.com" target="_Blank">Yunloc</a> Image. Author <a href="https://t.me/missuo" target="_Blank">Vincent</a>, <a href="https://www.yunloc.com/1738.html" target="_Blank">[ Install Help ]</a></p>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const uploadStatus = document.getElementById('uploadStatus');
+
+        fileInput.addEventListener('change', function() {
+            const file = fileInput.files[0];
+            if (file) {
+                uploadImage(file);
+            }
+        });
+
+        function uploadImage(file) {
+            const formData = new FormData();
+            formData.append('file', file);
+
+            uploadStatus.innerHTML = '<div class="alert alert-info"><i class="glyphicon glyphicon-upload"></i> 上传中，请稍候...</div>';
+
+            fetch('//tg.ulab.eu.org', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                const src = 'https://missuo.ru' + data[0].src;
+                const src1 = 'https://images.weserv.nl/?url=telegra.ph' + data[0].src;
+                const src2 = 'https://i3.wp.com/telegra.ph' + data[0].src;
+                uploadStatus.innerHTML = `
+                    <div class="alert alert-success"><i class="glyphicon glyphicon-ok"></i> 上传成功!</div>
+                    <div class="text-center">
+                        <img src="${src}" class="img-fluid mb-3" alt="Uploaded Image" style="max-width: 100%;">
+                    </div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" style="margin-top: 20px;" id="imageUrl" value="${src}">
+                        <div class="custom-input-group-append" style="margin-top: 60px;">
+                            <a href="${src}" target="_blank"><button type="button" class="btn btn-primary">在新标签中打开</button></a>
+                            <button class="btn btn-primary" type="button" onclick="copyImageUrl('imageUrl')" style="margin-left: 5px;">复制网址</button>
+                        </div>
+                    </div>          
+                    <div class="input-group">
+                        <input type="text" class="form-control" style="margin-top: 20px;" id="imageUrl1" value="${src1}">
+                        <div class="custom-input-group-append" style="margin-top: 60px;">
+                            <a href="${src1}" target="_blank"><button type="button" class="btn btn-primary">在新标签中打开</button></a>
+                            <button class="btn btn-primary" type="button" onclick="copyImageUrl('imageUrl1')" style="margin-left: 5px;">复制网址</button>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" style="margin-top: 20px;" id="imageUrl2" value="${src2}">
+                        <div class="custom-input-group-append" style="margin-top: 60px;">
+                            <a href="${src2}" target="_blank"><button type="button" class="btn btn-primary">在新标签中打开</button></a>
+                            <button class="btn btn-primary" type="button" onclick="copyImageUrl('imageUrl2')" style="margin-left: 5px;">复制网址</button>
+                        </div>
+                    </div>
+                `;
+                setTimeout(function() {
+                    const successAlert = document.querySelector('.alert-success');
+                    successAlert.style.display = 'none';
+                }, 5000);
+            })
+            .catch(error => {
+                uploadStatus.innerHTML = '<div class="alert alert-danger"><i class="glyphicon glyphicon-remove"></i> 上传失败! 请再试一次...</div>';
+            });
+        }
+
+        function copyImageUrl(imageUrlId) {
+            const imageUrl = document.getElementById(imageUrlId).value;
+            navigator.clipboard.writeText(imageUrl)
+                .then(function() {
+                    const alertBox = document.createElement('div');
+                    alertBox.className = 'alert alert-warning';
+                    alertBox.innerHTML = '<i class="glyphicon glyphicon-info-sign"></i> 已复制到剪贴板！';
+                    document.body.appendChild(alertBox);
+
+                    setTimeout(function() {
+                        alertBox.remove();
+                    }, 2000);
+                })
+                .catch(function(error) {
+                    console.error('复制失败:', error);
+                });
+        }
+    </script>
+</body>
+</html>
